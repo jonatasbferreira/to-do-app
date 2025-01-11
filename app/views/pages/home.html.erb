@@ -39,8 +39,22 @@
   <h1 class="text-start">Olá! Seja bem-vindo, Jônatas</h1>
   <h3 class="text-start text-muted mt-5">Meus quadros</h3>
 
-  <div class="mt-6">
-    <a href="#" class="btn btn-primary btn-lg">
+  <div class="row mt-4">
+    <% @boards.each do |board| %>
+      <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title"><%= board.name %></h5>
+            <p class="card-text">Criado em: <%= board.created_at.strftime("%d/%m/%Y") %></p>
+            <a href="<%= board_path(board) %>" class="btn btn-primary">Ver Quadro</a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-4">
+    <a href="<%= new_board_path %>" class="btn btn-primary btn-lg">
       <i class="bi bi-plus-lg me-2"></i> Criar Quadro
     </a>
   </div>
