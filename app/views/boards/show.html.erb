@@ -27,9 +27,10 @@
   <% end %>
 
   <div class="mt-4">
-    <a href="<%= new_board_list_path(@board) %>" class="btn btn-success">
-      <i class="bi bi-plus-lg me-2"> Adicionar Lista</i>
-    </a>
+    <%= link_to board_lists_path(@board), method: :post, class: "btn btn-success" do %>
+      <i class="bi bi-plus-lg me-2">Adicionar Lista</i>
+    <% end %>
+
     <a href="<%= root_path %>" class="btn btn-secondary">Voltar</a>
   </div>
 </div>
