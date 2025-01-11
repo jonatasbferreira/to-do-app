@@ -11,7 +11,12 @@
           <div class="card mb-4 shadow-sm">
             <div class="card-body">
               <h5 class="card-title"><%= list.name %></h5>
-                <p>Tarefas...</p>
+              <a class="btn btn-success">
+                <i class="bi bi-plus-lg me-2">Nova Tarefa</i>
+              </a>
+                <% list.tasks.each do |task| %>
+                  <p><%= task.title %></p>
+                <% end %>
             </div>
           </div>
         </div>
@@ -23,7 +28,7 @@
 
   <div class="mt-4">
     <a href="<%= new_board_list_path(@board) %>" class="btn btn-success">
-      <i class="bi bi-plus-lg me-2"></i> Adicionar Lista
+      <i class="bi bi-plus-lg me-2"> Adicionar Lista</i>
     </a>
     <a href="<%= root_path %>" class="btn btn-secondary">Voltar</a>
   </div>
