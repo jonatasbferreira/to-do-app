@@ -1,0 +1,35 @@
+<div class="container mt-5">
+  <h1 class="text-center"><%= @board.name %></h1>
+  <p class="text-center text-muted">Criado em: <%= @board.created_at.strftime("%d/%m/%Y") %></p>
+
+  <h3 class="mt-4">Listas</h3>
+
+  <% if @lists.any? %>
+    <div class="row">
+      <% @lists.each do |list| %>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title"><%= list.name %></h5>
+              <a class="btn btn-success">
+                <i class="bi bi-plus-lg me-2">Nova Tarefa</i>
+              </a>
+                <% list.tasks.each do |task| %>
+                  <p><%= task.title %></p>
+                <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-muted">Nenhuma lista criada para este quadro.</p>
+  <% end %>
+
+  <div class="mt-4">
+    <a href="<%= new_board_list_path(@board) %>" class="btn btn-success">
+      <i class="bi bi-plus-lg me-2"> Adicionar Lista</i>
+    </a>
+    <a href="<%= root_path %>" class="btn btn-secondary">Voltar</a>
+  </div>
+</div>
