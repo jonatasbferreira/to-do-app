@@ -40,22 +40,41 @@
   <h3 class="text-start text-muted mt-5">Meus quadros</h3>
 
   <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Criar Novo Quadro</h5>
+          <%= form_with model: Board.new, url: boards_path, method: :post, local: true do |form| %>
+            <div class="mb-3">
+              <%= form.label :name, "Nome do Quadro", class: "form-label" %>
+              <div class="d-flex">
+                <%= form.text_field :name, class: "form-control", placeholder: "Digite o nome do quadro" %>
+                <%= form.submit "Criar", class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
     <% @boards.each do |board| %>
       <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title"><%= board.name %></h5>
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="card-title"><%= board.name %></h5>
+              <%= link_to edit_board_path(board), class: "btn btn-sm btn-outline-secondary" do %>
+                <i class="bi bi-pencil-square"></i>
+              <% end %>
+            </div>
             <p class="card-text">Criado em: <%= board.created_at.strftime("%d/%m/%Y") %></p>
-            <a href="<%= board_path(board) %>" class="btn btn-primary">Ver Quadro</a>
+            <div class="d-flex justify-content-start gap-2">
+              <a href="<%= board_path(board) %>" class="btn btn-primary">Ver Quadro</a>
+              <%= button_to "Deletar", board_path(board), method: :delete, class: "btn btn-danger" %>
+            </div>
           </div>
         </div>
       </div>
     <% end %>
-  </div>
-
-  <div class="mt-4">
-    <a href="<%= new_board_path %>" class="btn btn-primary btn-lg">
-      <i class="bi bi-plus-lg me-2"></i> Criar Quadro
-    </a>
   </div>
 </div>
