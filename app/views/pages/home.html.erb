@@ -54,8 +54,19 @@
   </div>
 
   <div class="mt-4">
-    <a href="<%= new_board_path %>" class="btn btn-primary btn-lg">
-      <i class="bi bi-plus-lg me-2"></i> Criar Quadro
-    </a>
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Criar Novo Quadro</h5>
+        <%= form_with model: Board.new, url: boards_path, method: :post, local: true do |form| %>
+          <div class="mb-3">
+            <%= form.label :name, "Nome do Quadro", class: "form-label" %>
+            <%= form.text_field :name, class: "form-control", placeholder: "Digite o nome do quadro" %>
+          </div>
+          <div class="text-end">
+            <%= form.submit "Criar", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
