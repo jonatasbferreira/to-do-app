@@ -19,6 +19,15 @@ class BoardsController < ApplicationController
     end
   end
 
+  def destroy
+    @board = Board.find(params[:id])
+    if @board.destroy
+      redirect_to root_path, notice: "Quadro deletado com sucesso!"
+    else
+      redirect_to root_path, alert: "Erro ao deletar o quadro."
+    end
+  end
+
   private
 
   def board_params

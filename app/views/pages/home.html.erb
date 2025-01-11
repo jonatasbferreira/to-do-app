@@ -46,12 +46,16 @@
           <div class="card-body">
             <h5 class="card-title"><%= board.name %></h5>
             <p class="card-text">Criado em: <%= board.created_at.strftime("%d/%m/%Y") %></p>
-            <a href="<%= board_path(board) %>" class="btn btn-primary">Ver Quadro</a>
+            <div class="d-flex justify-content-start gap-2">
+              <a href="<%= board_path(board) %>" class="btn btn-primary">Ver Quadro</a>
+              <%= button_to "Deletar", board_path(board), method: :delete, class: "btn btn-danger" %>
+            </div>
           </div>
         </div>
       </div>
     <% end %>
   </div>
+
 
   <div class="mt-4">
     <div class="card mb-4 shadow-sm">
