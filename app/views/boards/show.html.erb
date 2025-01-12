@@ -2,7 +2,12 @@
   <h1 class="text-center"><%= @board.name %></h1>
   <p class="text-center text-muted">Criado em: <%= @board.created_at.strftime("%d/%m/%Y") %></p>
 
-  <h3 class="mt-4">Listas</h3>
+  <div class="d-flex align-items-center justify-content-start gap-2 mt-4 mb-4">
+    <a href="<%= root_path %>" class="btn btn-secondary">
+      <i class="bi bi-arrow-left me-2"></i> Voltar
+    </a>
+    <h3 class="mb-0">Listas</h3>
+  </div>
 
   <% if @lists.any? %>
     <div class="row">
@@ -10,13 +15,45 @@
         <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
             <div class="card-body">
-              <h5 class="card-title"><%= list.name %></h5>
+              <div class="d-flex align-items-center justify-content-between">
+                <h5 class="card-title"><%= list.name %></h5>
+                <div class="d-flex align-items-center justify-content-start">
+                  <%= link_to "#", class: "btn btn-sm", data: { bs_toggle: "modal", bs_target: "#editListModal-#{list.id}" } do %>
+                    <i class="bi bi-pencil-square"></i>
+                  <% end %>
+                  <%= button_to board_list_path(@board, list), method: :delete, class: "btn btn-sm" do %>
+                    <i class="bi bi-x"></i>
+                  <% end %>
+                </div>
+              </div>
               <a class="btn btn-success">
                 <i class="bi bi-plus-lg me-2">Nova Tarefa</i>
               </a>
-                <% list.tasks.each do |task| %>
-                  <p><%= task.title %></p>
+              <% list.tasks.each do |task| %>
+                <p><%= task.title %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="editListModal-<%= list.id %>" tabindex="-1" aria-labelledby="editListModalLabel-<%= list.id %>" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editListModalLabel-<%= list.id %>">Editar Nome da Lista</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%= form_with model: [@board, list], url: board_list_path(@board, list), method: :patch, local: true do |form| %>
+                  <div class="mb-3">
+                    <%= form.label :name, "Novo Nome", class: "form-label" %>
+                    <%= form.text_field :name, class: "form-control", value: list.name %>
+                  </div>
+                  <div class="text-end">
+                    <%= form.submit "Salvar", class: "btn btn-primary" %>
+                  </div>
                 <% end %>
+              </div>
             </div>
           </div>
         </div>
@@ -27,9 +64,8 @@
   <% end %>
 
   <div class="mt-4">
-    <a href="<%= new_board_list_path(@board) %>" class="btn btn-success">
-      <i class="bi bi-plus-lg me-2"> Adicionar Lista</i>
-    </a>
-    <a href="<%= root_path %>" class="btn btn-secondary">Voltar</a>
+    <%= button_to board_lists_path(@board), method: :post, class: "btn btn-success" do %>
+      <i class="bi bi-plus-lg me-2">Adicionar Lista</i>
+    <% end %>
   </div>
 </div>
