@@ -30,7 +30,34 @@
                 <i class="bi bi-plus-lg me-2">Nova Tarefa</i>
               </a>
               <% list.tasks.each do |task| %>
-                <p><%= task.title %></p>
+
+                <div class="col">
+                  <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center justify-content-start">
+                        <h5 class="card-title"><%= task.title %></h5>
+                        <div class="d-flex align-items-center justify-content-start">
+                          <%= link_to "#", class: "btn btn-sm" do %>
+                            <i class="bi bi-pencil-square"></i>
+                          <% end %>
+                          <%= button_to "#", class: "btn btn-sm" do %>
+                            <i class="bi bi-x"></i>
+                          <% end %>
+                        </div>
+                      </div>
+
+
+                      <p class="card-text">
+                        <strong>Prioridade:</strong> <%= task.priority %>
+                      </p>
+                      <p class="card-text">
+                        <strong>Status:</strong>
+                        <%= task.done ? "Concluída" : "Pendente" %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               <% end %>
             </div>
           </div>
