@@ -11,6 +11,18 @@ class ListsController < ApplicationController
     end
   end
 
+  def update
+    @board = Board.find(params[:board_id])
+    @list = @board.lists.find(params[:id])
+
+    if @list.update(list_params)
+      redirect_to board_path(@board), notice: "Lista atualizada com sucesso!"
+    else
+      flash[:alert] = "Erro ao atualizar a lista. Verifique os campos."
+      redirect_to board_path(@board)
+    end
+  end
+
   private
 
   def list_params
