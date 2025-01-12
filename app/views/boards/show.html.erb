@@ -29,8 +29,8 @@
               <a class="btn btn-success">
                 <i class="bi bi-plus-lg me-2">Nova Tarefa</i>
               </a>
-              <% list.tasks.each do |task| %>
 
+              <% list.tasks.each do |task| %>
                 <div class="col">
                   <div class="card mb-4 shadow-sm">
                     <div class="card-body">
@@ -45,8 +45,6 @@
                           <% end %>
                         </div>
                       </div>
-
-
                       <p class="card-text">
                         <strong>Prioridade:</strong> <%= task.priority %>
                       </p>
@@ -54,11 +52,14 @@
                         <strong>Status:</strong>
                         <%= task.done ? "Concluída" : "Pendente" %>
                       </p>
+                      <p class="card-text">
+                        <strong>Vencimento:</strong> <%= task.due_date.strftime("%d/%m/%Y") %>
+                      </p>
                     </div>
                   </div>
                 </div>
-
               <% end %>
+
             </div>
           </div>
         </div>
