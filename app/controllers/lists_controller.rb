@@ -23,6 +23,17 @@ class ListsController < ApplicationController
     end
   end
 
+  def destroy
+    @board = Board.find(params[:board_id])
+    @list = @board.lists.find(params[:id])
+
+    if @list.destroy
+      redirect_to board_path(@board), notice: "Lista deletada com sucesso!"
+    else
+      redirect_to board_path(@board), alert: "Erro ao deletar a lista."
+    end
+  end
+
   private
 
   def list_params

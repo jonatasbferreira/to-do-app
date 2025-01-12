@@ -17,9 +17,14 @@
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between">
                 <h5 class="card-title"><%= list.name %></h5>
-                <%= link_to "#", class: "btn btn-sm btn-outline-secondary", data: { bs_toggle: "modal", bs_target: "#editListModal-#{list.id}" } do %>
-                  <i class="bi bi-pencil-square"></i>
-                <% end %>
+                <div class="d-flex align-items-center justify-content-start">
+                  <%= link_to "#", class: "btn btn-sm", data: { bs_toggle: "modal", bs_target: "#editListModal-#{list.id}" } do %>
+                    <i class="bi bi-pencil-square"></i>
+                  <% end %>
+                  <%= button_to board_list_path(@board, list), method: :delete, class: "btn btn-sm" do %>
+                    <i class="bi bi-x"></i>
+                  <% end %>
+                </div>
               </div>
               <a class="btn btn-success">
                 <i class="bi bi-plus-lg me-2">Nova Tarefa</i>
