@@ -3,8 +3,8 @@
   <p class="text-center text-muted">Criado em: <%= @board.created_at.strftime("%d/%m/%Y") %></p>
 
   <div class="d-flex align-items-center justify-content-start gap-2 mt-4 mb-4">
-    <a href="<%= root_path %>" class="btn btn-secondary">
-      <i class="bi bi-arrow-left me-2"></i> Voltar
+    <a href="<%= root_path %>" class="icon-link">
+      <i class="bi bi-arrow-left me-2"></i>
     </a>
     <h3 class="mb-0">Listas</h3>
   </div>
@@ -26,12 +26,71 @@
                   <% end %>
                 </div>
               </div>
-              <a class="btn btn-success">
+
+              <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#newTaskModal-<%= list.id %>">
                 <i class="bi bi-plus-lg me-2">Nova Tarefa</i>
-              </a>
+              </button>
+
               <% list.tasks.each do |task| %>
-                <p><%= task.title %></p>
+                <div class="col">
+                  <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center justify-content-start">
+                        <h5 class="card-title"><%= task.title %></h5>
+                        <div class="d-flex align-items-center justify-content-start">
+                          <%= link_to "#", class: "btn btn-sm", data: { bs_toggle: "modal", bs_target: "#editTaskModal-#{task.id}" } do %>
+                            <i class="bi bi-pencil-square"></i>
+                          <% end %>
+                          <%= button_to board_list_task_path(@board, list, task), method: :delete, class: "btn btn-sm" do %>
+                            <i class="bi bi-x"></i>
+                          <% end %>
+                        </div>
+                      </div>
+                      <p class="card-text">
+                        <strong>Prioridade:</strong> <%= task.priority %>
+                      </p>
+                      <p class="card-text">
+                        <strong>Status:</strong>
+                        <%= task.done ? "Concluída" : "Pendente" %>
+                      </p>
+                      <p class="card-text">
+                        <strong>Vencimento:</strong> <%= task.due_date.strftime("%d/%m/%Y") %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal fade" id="editTaskModal-<%= task.id %>" tabindex="-1" aria-labelledby="editTaskModalLabel-<%= task.id %>" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="editTaskModalLabel-<%= task.id %>">Editar Tarefa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <%= form_with model: [@board, list, task], url: board_list_task_path(@board, list, task), method: :patch, local: true do |form| %>
+                          <div class="mb-3">
+                            <%= form.label :title, "Título", class: "form-label" %>
+                            <%= form.text_field :title, class: "form-control", placeholder: "Título da tarefa", value: task.title, required: true %>
+                          </div>
+                          <div class="mb-3">
+                            <%= form.label :priority, "Prioridade", class: "form-label" %>
+                            <%= form.select :priority, [["Alta", "alta"], ["Média", "media"], ["Baixa", "baixa"]], {selected: task.priority}, class: "form-select" %>
+                          </div>
+                          <div class="mb-3">
+                            <%= form.label :due_date, "Data de Vencimento", class: "form-label" %>
+                            <%= form.date_field :due_date, class: "form-control", value: task.due_date, required: true %>
+                          </div>
+                          <div class="text-end">
+                            <%= form.submit "Salvar Alterações", class: "btn btn-primary" %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               <% end %>
+
             </div>
           </div>
         </div>
@@ -51,6 +110,37 @@
                   </div>
                   <div class="text-end">
                     <%= form.submit "Salvar", class: "btn btn-primary" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="modal fade" id="newTaskModal-<%= list.id %>" tabindex="-1" aria-labelledby="newTaskModalLabel-<%= list.id %>" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="newTaskModalLabel-<%= list.id %>">Criar Nova Tarefa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%= form_with model: [@board, list, list.tasks.build], url: board_list_tasks_path(@board, list), method: :post, local: true do |form| %>
+                  <div class="mb-3">
+                    <%= form.label :title, "Título", class: "form-label" %>
+                    <%= form.text_field :title, class: "form-control", placeholder: "Título da tarefa", required: true %>
+                  </div>
+                  <div class="mb-3">
+                    <%= form.label :priority, "Prioridade", class: "form-label" %>
+                    <%= form.select :priority, [["Alta", "alta"], ["Média", "media"], ["Baixa", "baixa"]], {}, class: "form-select" %>
+                  </div>
+                  <div class="mb-3">
+                    <%= form.label :due_date, "Data de Vencimento", class: "form-label" %>
+                    <%= form.date_field :due_date, class: "form-control", required: true %>
+                  </div>
+                  <div class="text-end">
+                    <%= form.submit "Criar Tarefa", class: "btn btn-primary" %>
                   </div>
                 <% end %>
               </div>

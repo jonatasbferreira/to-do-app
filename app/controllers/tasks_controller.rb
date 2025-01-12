@@ -3,39 +3,44 @@ class TasksController < ApplicationController
   before_action :set_list
   before_action :set_task, only: [ :show, :update, :destroy ]
 
-  # GET /boards/:board_id/lists/:list_id/tasks
   def index
     @tasks = @list.tasks
     render json: @tasks
   end
 
-  # POST /boards/:board_id/lists/:list_id/tasks
   def create
     @task = @list.tasks.new(task_params)
     if @task.save
-      render json: @task, status: :created
+      redirect_to board_path(@board), notice: "Tarefa criada com sucesso!"
     else
-      render json: @task.errors, status: :unprocessable_entity
+      flash[:alert] = "Erro ao criar a tarefa. Verifique os campos."
+      redirect_to board_path(@board)
     end
   end
 
-  # GET /boards/:board_id/lists/:list_id/tasks/:id
   def show
     render json: @task
   end
 
-  # PATCH/PUT /boards/:board_id/lists/:list_id/tasks/:id
   def update
+    @board = Board.find(params[:board_id])
+    @list = @board.lists.find(params[:list_id])
+    @task = @list.tasks.find(params[:id])
+
     if @task.update(task_params)
-      render json: @task
+      redirect_to board_path(@board), notice: "Tarefa atualizada com sucesso!"
     else
-      render json: @task.errors, status: :unprocessable_entity
+      flash[:alert] = "Erro ao atualizar a tarefa. Verifique os campos."
+      redirect_to board_path(@board)
     end
   end
 
-  # DELETE /boards/:board_id/lists/:list_id/tasks/:id
   def destroy
-    @task.destroy
+    if @task.destroy
+      redirect_to board_path(@board), notice: "Tarefa deletada com sucesso!"
+    else
+      redirect_to board_path(@board), notice: "Erro ao deleta a tarefa."
+    end
   end
 
   private
