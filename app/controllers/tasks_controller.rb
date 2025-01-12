@@ -3,13 +3,11 @@ class TasksController < ApplicationController
   before_action :set_list
   before_action :set_task, only: [ :show, :update, :destroy ]
 
-  # GET /boards/:board_id/lists/:list_id/tasks
   def index
     @tasks = @list.tasks
     render json: @tasks
   end
 
-  # POST /boards/:board_id/lists/:list_id/tasks
   def create
     @task = @list.tasks.new(task_params)
     if @task.save
@@ -19,12 +17,10 @@ class TasksController < ApplicationController
     end
   end
 
-  # GET /boards/:board_id/lists/:list_id/tasks/:id
   def show
     render json: @task
   end
 
-  # PATCH/PUT /boards/:board_id/lists/:list_id/tasks/:id
   def update
     if @task.update(task_params)
       render json: @task
@@ -33,9 +29,12 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /boards/:board_id/lists/:list_id/tasks/:id
   def destroy
-    @task.destroy
+    if @task.destroy
+      redirect_to board_path(@board), notice: "Tarefa deletada com sucesso!"
+    else
+      redirect_to board_path(@board), notice: "Erro ao deleta a tarefa."
+    end
   end
 
   private

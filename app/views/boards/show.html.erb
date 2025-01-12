@@ -40,7 +40,7 @@
                           <%= link_to "#", class: "btn btn-sm" do %>
                             <i class="bi bi-pencil-square"></i>
                           <% end %>
-                          <%= button_to "#", class: "btn btn-sm" do %>
+                          <%= button_to board_list_task_path(@board, list, task), method: :delete, class: "btn btn-sm" do %>
                             <i class="bi bi-x"></i>
                           <% end %>
                         </div>
