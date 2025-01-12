@@ -11,9 +11,10 @@ class TasksController < ApplicationController
   def create
     @task = @list.tasks.new(task_params)
     if @task.save
-      render json: @task, status: :created
+      redirect_to board_path(@board), notice: "Tarefa criada com sucesso!"
     else
-      render json: @task.errors, status: :unprocessable_entity
+      flash[:alert] = "Erro ao criar a tarefa. Verifique os campos."
+      redirect_to board_path(@board)
     end
   end
 
