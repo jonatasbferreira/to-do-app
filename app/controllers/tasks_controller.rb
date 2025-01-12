@@ -23,10 +23,15 @@ class TasksController < ApplicationController
   end
 
   def update
+    @board = Board.find(params[:board_id])
+    @list = @board.lists.find(params[:list_id])
+    @task = @list.tasks.find(params[:id])
+
     if @task.update(task_params)
-      render json: @task
+      redirect_to board_path(@board), notice: "Tarefa atualizada com sucesso!"
     else
-      render json: @task.errors, status: :unprocessable_entity
+      flash[:alert] = "Erro ao atualizar a tarefa. Verifique os campos."
+      redirect_to board_path(@board)
     end
   end
 
