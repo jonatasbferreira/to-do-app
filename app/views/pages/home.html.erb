@@ -57,20 +57,26 @@
       </div>
     </div>
 
+
+
     <% @boards.each do |board| %>
       <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
           <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
               <h5 class="card-title"><%= board.name %></h5>
-              <button type="button" class="btn btn-md" data-bs-toggle="modal" data-bs-target="#editBoardModal-<%= board.id %>">
-                <i class="bi bi-pencil-square"></i>
-              </button>
+              <div class="d-flex align-items-center justify-content-between">
+                <button type="button" class="btn btn-md" data-bs-toggle="modal" data-bs-target="#editBoardModal-<%= board.id %>">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <%= button_to board_path(board), method: :delete, class: "btn btn-lg" do %>
+                  <i class="bi bi-x"></i>
+                <% end %>
+              </div>
             </div>
             <p class="card-text">Criado em: <%= board.created_at.strftime("%d/%m/%Y") %></p>
             <div class="d-flex justify-content-start gap-2">
               <a href="<%= board_path(board) %>" class="btn btn-primary">Ver Quadro</a>
-              <%= button_to "Deletar", board_path(board), method: :delete, class: "btn btn-danger" %>
             </div>
           </div>
         </div>
