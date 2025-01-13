@@ -63,9 +63,9 @@
           <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
               <h5 class="card-title"><%= board.name %></h5>
-              <%= link_to edit_board_path(board), class: "btn btn-sm btn-outline-secondary" do %>
+              <button type="button" class="btn btn-md" data-bs-toggle="modal" data-bs-target="#editBoardModal-<%= board.id %>">
                 <i class="bi bi-pencil-square"></i>
-              <% end %>
+              </button>
             </div>
             <p class="card-text">Criado em: <%= board.created_at.strftime("%d/%m/%Y") %></p>
             <div class="d-flex justify-content-start gap-2">
@@ -75,6 +75,29 @@
           </div>
         </div>
       </div>
+
+      <div class="modal fade" id="editBoardModal-<%= board.id %>" tabindex="-1" aria-labelledby="editBoardModalLabel-<%= board.id %>" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editBoardModalLabel-<%= board.id %>">Editar Quadro</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <%= form_with model: board, url: board_path(board), method: :patch, local: true do |form| %>
+                <div class="mb-3">
+                  <%= form.label :name, "Nome do Quadro", class: "form-label" %>
+                  <%= form.text_field :name, class: "form-control", placeholder: "Digite o nome do quadro", value: board.name, required: true %>
+                </div>
+                <div class="text-end">
+                  <%= form.submit "Salvar Alterações", class: "btn btn-primary" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>
+
