@@ -28,17 +28,13 @@ class BoardsController < ApplicationController
     end
   end
 
-  def edit
-    @board = Board.find(params[:id])
-  end
-
   def update
     @board = Board.find(params[:id])
     if @board.update(board_params)
       redirect_to root_path, notice: "Quadro atualizado com sucesso!"
     else
       flash.now[:alert] = "Erro ao atualizar o quadro. Verifique os campos."
-      render :edit
+      redirect_to root_path
     end
   end
 
