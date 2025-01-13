@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   resources :boards do
     resources :lists do
-      resources :tasks
+      resources :tasks do
+        patch :move, on: :member
+      end
     end
   end
 end

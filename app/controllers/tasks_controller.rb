@@ -43,6 +43,21 @@ class TasksController < ApplicationController
     end
   end
 
+  def move
+    @board = Board.find(params[:board_id])
+    @list = List.find(params[:list_id])
+    @task = Task.find(params[:id])
+
+    new_list_id = params[:new_list_id]
+    new_list = List.find(new_list_id)
+
+    if @task.update(list: new_list)
+      redirect_to board_path(@board), notice: "Tarefa movida com sucesso!"
+    else
+      flash.now[:alert] = "Erro ao mover a tarefa."
+    end
+  end
+
   private
 
   def set_board
