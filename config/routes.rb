@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   root "pages#home"
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :boards do
-    resources :lists do
-      resources :tasks do
+  resources :boards, except: [ :index ] do
+    resources :lists, except: [ :index, :show ] do
+      resources :tasks, except: [ :index, :show ] do
         patch :move, :check, on: :member
       end
     end
