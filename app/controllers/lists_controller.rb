@@ -1,4 +1,5 @@
 class ListsController < ApplicationController
+  before_action :authenticate_user!
   def create
     @board = Board.find(params[:board_id])
     @list = @board.lists.build(name: "Nova Lista")
