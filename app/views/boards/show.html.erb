@@ -1,11 +1,11 @@
 <%= render "shared/nav_bar" %>
 
-<div class="container-fluid mt-5 px-5">
+<div class="container-fluid mt-3 px-5">
   <h1 class="text-center"><%= @board.name %></h1>
   <p class="text-center text-muted">Criado em: <%= @board.created_at.strftime("%d/%m/%Y") %></p>
 
   <div class="d-flex align-items-center justify-content-start gap-2 mt-4 mb-4">
-    <a href="<%= root_path %>" class="link-dark">
+    <a href="<%= root_path %>" class="link-dark ">
       <i class="bi bi-arrow-left me-2"></i>
     </a>
     <h3 class="mb-0">Listas</h3>
@@ -30,13 +30,16 @@
               </div>
 
               <button class="btn btn-primary mb-3 w-100" data-bs-toggle="modal" data-bs-target="#newTaskModal-<%= list.id %>">
-                <i class="bi bi-plus-lg me-2"> Nova Tarefa</i>
+                <i class="bi bi-plus-lg me-2"></i> Nova Tarefa
               </button>
+
+
+
 
               <div class="task-container list-card-body" data-list-id="<%= list.id %>" data-board-id="<%= @board.id %>">
                 <% list.tasks.each do |task| %>
                   <div class="col">
-                    <div class="card mb-4 shadow-sm task-id task-container" data-task-id="<%= task.id %>">
+                    <div class="card mb-2 shadow-sm task-id task-container" data-task-id="<%= task.id %>">
                       <div class="card-body">
                         <div class="d-flex align-items-center justify-content-start">
                           <h5 class="card-title"><%= task.title %></h5>
@@ -156,11 +159,16 @@
         </div>
       <% end %>
 
-      <div>
-        <%= button_to board_lists_path(@board), method: :post, class: "btn btn-primary w-100" do %>
-          <i class="bi bi-plus-lg me-2">Adicionar Lista</i>
+      <div class="col-md-2">
+        <%= button_to board_lists_path(@board), method: :post, class: "card mb-4 shadow-sm task-list d-flex align-items-center justify-content-center text-decoration-none", style: "background: none; cursor: pointer; height: 100%;" do %>
+          <div class="card-body text-center">
+            <i class="bi bi-plus-lg" style="font-size: 2rem;"></i>
+            <p class="mt-2">Adicionar Lista</p>
+          </div>
         <% end %>
       </div>
+
+
     </div>
   <% else %>
     <p class="text-muted">Nenhuma lista criada para este quadro.</p>
