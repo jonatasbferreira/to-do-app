@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container-fluid mt-5 px-5">
   <h1 class="text-center"><%= @board.name %></h1>
   <p class="text-center text-muted">Criado em: <%= @board.created_at.strftime("%d/%m/%Y") %></p>
 
@@ -10,11 +10,11 @@
   </div>
 
   <% if @lists.any? %>
-    <div class="row">
+    <div class="d-flex flex-nowrap overflow-auto pb-4 gap-4 justify-content-center">
       <% @lists.each do |list| %>
-        <div class="col-md-4">
+        <div class="col-md-2">
           <div class="card mb-4 shadow-sm task-list" data-list-id="<%= list.id %>">
-            <div class="card-body">
+            <div class="card-body list-card-body">
               <div class="d-flex align-items-center justify-content-between">
                 <h5 class="card-title"><%= list.name %></h5>
                 <div class="d-flex align-items-center justify-content-start">
@@ -150,14 +150,14 @@
           </div>
         </div>
       <% end %>
+
+      <div>
+        <%= button_to board_lists_path(@board), method: :post, class: "btn btn-success" do %>
+          <i class="bi bi-plus-lg me-2">Adicionar Lista</i>
+        <% end %>
+      </div>
     </div>
   <% else %>
     <p class="text-muted">Nenhuma lista criada para este quadro.</p>
   <% end %>
-
-  <div class="mt-4">
-    <%= button_to board_lists_path(@board), method: :post, class: "btn btn-success" do %>
-      <i class="bi bi-plus-lg me-2">Adicionar Lista</i>
-    <% end %>
-  </div>
 </div>
