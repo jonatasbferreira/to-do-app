@@ -1,3 +1,44 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 @import "lists/lists";
+
+$color-p: #b68bdc;
+$color-p-hover: #9a50dc;
+$color-s: #C4D9FF;
+$color-not-done: #c1c0c0;
+
+.color-p {
+  color: $color-p;
+}
+a.color-p:hover {
+  color: $color-p-hover;
+}
+
+.bg-p {
+  background-color: $color-p;
+  border-color: $color-p;
+}
+.bg-p:hover {
+  background-color: $color-p-hover;
+  border-color: $color-p-hover;
+}
+
+.btn.bg-p:active, .btn.bg-p:focus, .btn.bg-p:disabled, .dropdown-item:active {
+  background-color: $color-p-hover;
+  border-color: $color-p-hover;
+  box-shadow: none;
+  outline: none;
+}
+
+
+.bg-s {
+  background-color: $color-s;
+}
+
+.done-task {
+  border-left: 10px solid $color-p
+}
+
+.not-done-task {
+  border-left: 10px solid $color-not-done;
+}

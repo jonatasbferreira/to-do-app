@@ -1,33 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand">To-do App</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-        </li>
-      </ul>
-      <div class="d-flex">
-        <div class="nav-item dropdown d-flex align-items-center gap-2 px-4">
-          <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-               alt="Avatar"
-               class="rounded-circle me-2"
-               style="width: 30px; height: 30px; object-fit: cover;">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= current_user.name %>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <% if user_signed_in? %>
-              <%= button_to 'Sair', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
+<%= render "shared/nav_bar" %>
 
 <div class="container mt-5">
   <h1 class="text-start">Bem-vindo, <%= current_user.name %>!</h1>
@@ -43,7 +14,7 @@
               <%= form.label :name, "Nome do Quadro", class: "form-label" %>
               <div class="d-flex gap-4">
                 <%= form.text_field :name, class: "form-control", placeholder: "Digite o nome do quadro", required: true %>
-                <%= form.submit "Criar", class: "btn btn-primary" %>
+                <%= form.submit "Criar", class: "btn btn-primary bg-p" %>
               </div>
             </div>
           <% end %>
@@ -70,7 +41,7 @@
             </div>
             <p class="card-text">Criado em: <%= board.created_at.strftime("%d/%m/%Y") %></p>
             <div class="d-flex justify-content-start gap-2">
-              <a href="<%= board_path(board) %>" class="btn btn-primary">Ver Quadro</a>
+              <a href="<%= board_path(board) %>" class="btn btn-primary bg-p">Ver Quadro</a>
             </div>
           </div>
         </div>
@@ -90,7 +61,7 @@
                   <%= form.text_field :name, class: "form-control", placeholder: "Digite o nome do quadro", value: board.name, required: true %>
                 </div>
                 <div class="text-end">
-                  <%= form.submit "Salvar Alterações", class: "btn btn-primary" %>
+                  <%= form.submit "Salvar Alterações", class: "btn btn-primary bg-p" %>
                 </div>
               <% end %>
             </div>
