@@ -29,7 +29,7 @@
                 </div>
               </div>
 
-              <button class="btn btn-primary mb-3 w-100" data-bs-toggle="modal" data-bs-target="#newTaskModal-<%= list.id %>">
+              <button class="btn btn-primary mb-3 w-100 bg-p" data-bs-toggle="modal" data-bs-target="#newTaskModal-<%= list.id %>">
                 <i class="bi bi-plus-lg me-2"></i> Nova Tarefa
               </button>
 
@@ -39,7 +39,7 @@
               <div class="task-container list-card-body" data-list-id="<%= list.id %>" data-board-id="<%= @board.id %>">
                 <% list.tasks.each do |task| %>
                   <div class="col">
-                    <div class="card mb-2 shadow-sm task-id task-container" data-task-id="<%= task.id %>">
+                    <div class="card mb-2 shadow-sm task-id task-container <%= task.done ? 'done-task' : 'not-done-task' %>" data-task-id="<%= task.id %>">
                       <div class="card-body">
                         <div class="d-flex align-items-center justify-content-start">
                           <h5 class="card-title"><%= task.title %></h5>

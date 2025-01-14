@@ -14,7 +14,7 @@
               <%= form.label :name, "Nome do Quadro", class: "form-label" %>
               <div class="d-flex gap-4">
                 <%= form.text_field :name, class: "form-control", placeholder: "Digite o nome do quadro", required: true %>
-                <%= form.submit "Criar", class: "btn btn-primary" %>
+                <%= form.submit "Criar", class: "btn btn-primary bg-p" %>
               </div>
             </div>
           <% end %>
@@ -41,7 +41,7 @@
             </div>
             <p class="card-text">Criado em: <%= board.created_at.strftime("%d/%m/%Y") %></p>
             <div class="d-flex justify-content-start gap-2">
-              <a href="<%= board_path(board) %>" class="btn btn-primary">Ver Quadro</a>
+              <a href="<%= board_path(board) %>" class="btn btn-primary bg-p">Ver Quadro</a>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@
                   <%= form.text_field :name, class: "form-control", placeholder: "Digite o nome do quadro", value: board.name, required: true %>
                 </div>
                 <div class="text-end">
-                  <%= form.submit "Salvar Alterações", class: "btn btn-primary" %>
+                  <%= form.submit "Salvar Alterações", class: "btn btn-primary bg-p" %>
                 </div>
               <% end %>
             </div>
