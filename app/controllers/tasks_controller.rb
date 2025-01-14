@@ -58,6 +58,18 @@ class TasksController < ApplicationController
     end
   end
 
+  def check
+    @board = Board.find(params[:board_id])
+    @list = List.find(params[:list_id])
+    @task = Task.find(params[:id])
+
+    if @task.update(done: !@task.done)
+      redirect_to board_path(@board), notice: "Tarefa marcada com sucesso!"
+    else
+      redirect_to board_path(@board), notice: "Erro ao marcar tarefa."
+    end
+  end
+
   private
 
   def set_board
