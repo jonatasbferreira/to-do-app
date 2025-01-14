@@ -1,26 +1,26 @@
 class BoardsController < ApplicationController
+  before_action :authenticate_user!
   def index
-    @boards = Board.all
+    @boards = current_user.boards
   end
 
   def show
-    @board = Board.find(params[:id])
+    @board = current_user.boards.find(params[:id])
     @lists = @board.lists
   end
 
   def create
-    @board = Board.new(board_params)
+    @board = current_user.boards.build(board_params)
     if @board.save
       redirect_to root_path, notice: "Quadro criado com sucesso!"
     else
       @boards = Board.all
-      flash.now[:alert] = "Erro ao criar o quadro. Verifique os campos."
-      render :index
+      redirect_to root_path, notice: "Erro ao criar o quadro. Verifique os campos."
     end
   end
 
   def destroy
-    @board = Board.find(params[:id])
+    @board = current_user.boards.find(params[:id])
     if @board.destroy
       redirect_to root_path, notice: "Quadro deletado com sucesso!"
     else
@@ -29,7 +29,7 @@ class BoardsController < ApplicationController
   end
 
   def update
-    @board = Board.find(params[:id])
+    @board = current_user.boards.find(params[:id])
     if @board.update(board_params)
       redirect_to root_path, notice: "Quadro atualizado com sucesso!"
     else
