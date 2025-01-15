@@ -1,0 +1,74 @@
+<%= render "shared/nav_bar" %>
+
+<div class="container mt-5">
+  <h1 class="text-start">Bem-vindo, <%= current_user.name %>!</h1>
+  <h3 class="text-start text-muted mt-5">Meus quadros</h3>
+
+  <div class="row mt-4">
+    <div class="col-md-3">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mt-2">Criar Novo Quadro</h5>
+          <%= form_with model: Board.new, url: boards_path, method: :post, local: true do |form| %>
+            <div class="mb-3">
+              <%= form.label :name, "Nome do Quadro", class: "form-label" %>
+              <div class="d-flex gap-4">
+                <%= form.text_field :name, class: "form-control", placeholder: "Digite o nome", required: true %>
+                <%= form.submit "Criar", class: "btn btn-primary bg-p" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+
+
+    <% @boards.each do |board| %>
+      <div class="col-md-3">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="card-title"><%= board.name %></h5>
+              <div class="d-flex align-items-center justify-content-between">
+                <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editBoardModal-<%= board.id %>">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <%= button_to board_path(board), method: :delete, class: "btn btn-lg" do %>
+                  <i class="bi bi-trash"></i>
+                <% end %>
+              </div>
+            </div>
+            <p class="card-text">Criado em: <%= board.created_at.strftime("%d/%m/%Y") %></p>
+            <div class="d-flex justify-content-start gap-2">
+              <a href="<%= board_path(board) %>" class="btn btn-primary bg-p">Ver Quadro</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="editBoardModal-<%= board.id %>" tabindex="-1" aria-labelledby="editBoardModalLabel-<%= board.id %>" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editBoardModalLabel-<%= board.id %>">Editar Quadro</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <%= form_with model: board, url: board_path(board), method: :patch, local: true do |form| %>
+                <div class="mb-3">
+                  <%= form.label :name, "Nome do Quadro", class: "form-label" %>
+                  <%= form.text_field :name, class: "form-control", placeholder: "Digite o nome do quadro", value: board.name, required: true %>
+                </div>
+                <div class="text-end">
+                  <%= form.submit "Salvar Alterações", class: "btn btn-primary bg-p" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
