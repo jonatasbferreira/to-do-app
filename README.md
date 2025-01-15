@@ -2,8 +2,8 @@
 
 ### Links Úteis
 
-- [Vídeo de demonstração]()
-- [Link da Aplicação]()
+- [Vídeo de demonstração](https://drive.google.com/file/d/1hjacdpQEIQbHRiun609fuK1SCsxn8nBv/view?usp=sharing)
+- [Link da Aplicação](https://jonatas-to-do-app.fly.dev/users/sign_in)
 
 ### Descrição Inicial
 
